@@ -1,0 +1,33 @@
+# Eclipse
+.settings
+.metadata
+.project
+.classpath
+Servers
+bin
+target
+classes
+
+# SpringSource Tool Suite
+.springBeans
+
+# Gradle
+.gradle
+
+# Netbeans
+build
+dist
+private
+
+# Jasper Report
+*.bak
+
+# Upload result
+# sailorman-ui.web/src/main/webapp/uploads/*
+
+# Intellij IDEA
+*.ipr
+*.ids
+*.iws
+*.iml
+.idea
