@@ -8,93 +8,10 @@ var dateFormatter = require('./dateformat'); //Add Format Functionality For Date
 
 var TrainSchedule = function(jadwal, asal, tujuan, callback) {
 
-    var station = {
-        bd :{
-            kode : "BD#BANDUNG" ,
-            nama :"Bandung"
-        },
-        bw :{
-            kode : "BW#BANYUWANGI" ,
-            nama :"Banyuwangi"
-        },
-        cp :{
-            kode : "CP#CILACAP" ,
-            nama :"Cilacap"
-        },
-        cn :{
-            kode : "CN#CIREBON" ,
-            nama :"Cirebon"
-        },
-        gmr :{
-            kode : "GMR#JAKARTA [Gambir]" ,
-            nama :"Jakarta [Gambir]"
-        },
-        jak :{
-            kode : "JAK#JAKARTA [Kota]" ,
-            nama :"Jakarta [Kota]"
-        },
-        pse :{
-            kode : "PSE#JAKARTA [Pasar Senen]" ,
-            nama :"Jakarta [Pasar Senen]"
-        },
-        jr :{
-            kode : "JR#JEMBER" ,
-            nama :"Jember"
-        },
-        jg :{
-            kode : "JG#JOMBANG" ,
-            nama :"Jombang"
-        },
-        kd :{
-            kode : "KD#KEDIRI" ,
-            nama :"Kediri"
-        },
-        kta :{
-            kode : "KTA#KUTOARJO" ,
-            nama :"Kutoarjo"
-        },
-        mn :{
-            kode : "MN#MADIUN" ,
-            nama :"Madiun"
-        },
-        ml :{
-            kode : "ML#MALANG" ,
-            nama :"Malang"
-        },
-        pwt :{
-            kode : "PWT#PURWOKERTO" ,
-            nama :"Purwokerto"
-        },
-        smt :{
-            kode : "SMT#SEMARANG [Tawang]" ,
-            nama :"Semarang [Tawang]"
-        },
-        slo :{
-            kode : "SLO#SOLOBALAPAN" ,
-            nama :"Solo Balapan"
-        },
-        sgu :{
-            kode : "SGU#SURABAYA [Gubeng]" ,
-            nama :"Surabaya [Gubeng]"
-        },
-        sbi :{
-            kode : "SBI#SURABAYA [Pasar Turi]" ,
-            nama :"Surabaya [Pasar Turi]"
-        },
-        tg :{
-            kode : "TG#TEGAL" ,
-            nama :"Tegal"
-        },
-        yk :{
-            kode : "YK#YOGYAKARTA" ,
-            nama :"Yogyakarta"
-        }
-    };
-
     var params = {
         'tgl_jadwal': jadwal.format("yyyy-mm-dd#dddd, dd mmmm yyyy", "ID"),
-        'stn_asal':station[asal.toLowerCase()].kode,
-        'stn_tujuan':station[tujuan.toLowerCase()].kode,
+        'stn_asal':TrainSchedule.station[asal.toLowerCase()].kode,
+        'stn_tujuan':TrainSchedule.station[tujuan.toLowerCase()].kode,
         'cari':'Tampilkan'
     };
 
@@ -112,10 +29,7 @@ var TrainSchedule = function(jadwal, asal, tujuan, callback) {
     var result = [];
 
     var req = http.request(options, function(res) {
-//        console.log('STATUS: ' + res.statusCode);
-//        console.log('HEADERS: ' + JSON.stringify(res.headers));
 
-//        console.log(JSON.stringify(params));
         res.setEncoding('utf8');
         var data = '';
         var i = 0;
@@ -129,12 +43,10 @@ var TrainSchedule = function(jadwal, asal, tujuan, callback) {
                     'http://code.jquery.com/jquery-1.5.min.js'
                 ],
                 function(errors, window) {
-//                    console.log('start');
                     var kereta = [];
                     window.$('tr.Row1').each(function() {
                         var p = window.$(this).find('b').html();
                         kereta.push(p);
-//                        console.log(p);
                     });
 
                     var i = 0;
@@ -157,10 +69,6 @@ var TrainSchedule = function(jadwal, asal, tujuan, callback) {
                     });
 
                     callback(result);
-//                    console.log(sys.inspect(result));
-//                    console.log('finish');
-
-
                 }
             );
         });
@@ -171,16 +79,97 @@ var TrainSchedule = function(jadwal, asal, tujuan, callback) {
     });
 
     var paramString = QS.stringify(params);
-//    console.log(paramString);
 
     req.end(paramString);
 
 };
 
-//console.log(req);
+TrainSchedule.station = {
+    bd :{
+        kode : "BD#BANDUNG" ,
+        nama :"Bandung"
+    },
+    bw :{
+        kode : "BW#BANYUWANGI" ,
+        nama :"Banyuwangi"
+    },
+    cp :{
+        kode : "CP#CILACAP" ,
+        nama :"Cilacap"
+    },
+    cn :{
+        kode : "CN#CIREBON" ,
+        nama :"Cirebon"
+    },
+    gmr :{
+        kode : "GMR#JAKARTA [Gambir]" ,
+        nama :"Jakarta [Gambir]"
+    },
+    jak :{
+        kode : "JAK#JAKARTA [Kota]" ,
+        nama :"Jakarta [Kota]"
+    },
+    pse :{
+        kode : "PSE#JAKARTA [Pasar Senen]" ,
+        nama :"Jakarta [Pasar Senen]"
+    },
+    jr :{
+        kode : "JR#JEMBER" ,
+        nama :"Jember"
+    },
+    jg :{
+        kode : "JG#JOMBANG" ,
+        nama :"Jombang"
+    },
+    kd :{
+        kode : "KD#KEDIRI" ,
+        nama :"Kediri"
+    },
+    kta :{
+        kode : "KTA#KUTOARJO" ,
+        nama :"Kutoarjo"
+    },
+    mn :{
+        kode : "MN#MADIUN" ,
+        nama :"Madiun"
+    },
+    ml :{
+        kode : "ML#MALANG" ,
+        nama :"Malang"
+    },
+    pwt :{
+        kode : "PWT#PURWOKERTO" ,
+        nama :"Purwokerto"
+    },
+    smt :{
+        kode : "SMT#SEMARANG [Tawang]" ,
+        nama :"Semarang [Tawang]"
+    },
+    slo :{
+        kode : "SLO#SOLOBALAPAN" ,
+        nama :"Solo Balapan"
+    },
+    sgu :{
+        kode : "SGU#SURABAYA [Gubeng]" ,
+        nama :"Surabaya [Gubeng]"
+    },
+    sbi :{
+        kode : "SBI#SURABAYA [Pasar Turi]" ,
+        nama :"Surabaya [Pasar Turi]"
+    },
+    tg :{
+        kode : "TG#TEGAL" ,
+        nama :"Tegal"
+    },
+    yk :{
+        kode : "YK#YOGYAKARTA" ,
+        nama :"Yogyakarta"
+    }
+};
+
 
 TrainSchedule(new Date(2011, 6, 12), 'SGU', 'YK', function(result) {
-//    console.log(JSON.stringify(result));
+    console.log(JSON.stringify(result));
     _.each(result, function(obj) {
         console.log(obj.kereta);
         console.log(obj.nomor);
